@@ -1,0 +1,11 @@
+# Configurações JetBrains
+.idea
+
+# Ambiente virtual para execução do Python
+venv
+
+# Arquivos gerados
+*.py[oc]
+
+# Pastas geradas para cache
+__pycache__
