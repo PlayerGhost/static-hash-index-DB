@@ -1,8 +1,8 @@
 import requests
 
-def loadDatabase():
-    rawData = requests.get('https://github.com/dwyl/english-words/raw/master/words_dictionary.json')
-    dataDict = rawData.json()
+    if response.status_code != HTTPStatusCode.OK:
+        invalid_response_error = 'Houve algum erro durante a obtenção dos dados'
+        raise ValueError(invalid_response_error)
 
     return list(dataDict.items())
 
