@@ -1,14 +1,12 @@
 from requests import get
 from requests.status_codes import codes as HTTPStatusCode
+from Hash import hash
 
-ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words_dictionary.json'
+ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words.txt'
 
 
 def load_database():
-    wordlist_json = get_words_from_repo()
-    result = wordlist_json.keys()
-
-    return result
+    return get_words_from_repo().text.split("\n")
 
 
 def get_words_from_repo():
@@ -18,10 +16,16 @@ def get_words_from_repo():
         invalid_response_error = 'Não foi possível obter a lista de palavras do repositório!'
         raise ValueError(invalid_response_error)
 
-    return response.json()
+    return response
 
 
 if __name__ == '__main__':
     database = load_database()
+    teste = set()
 
-    print(database)
+    '''for i in database:
+
+       teste.add(hash(i,len(database)))
+
+    print('tamanho do set ', len(teste))
+    print('tamanho do database ', len(database))'''
