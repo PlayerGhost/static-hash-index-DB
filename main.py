@@ -6,10 +6,13 @@ ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words.txt'
 
 
 def load_database():
-    return get_words_from_repo().text.split("\n")
+    content = retrieve_words_from_repo()
+    data = content.text.split("\n")
+    filtered_data = list(filter(len, data))
+    return filtered_data
 
 
-def get_words_from_repo():
+def retrieve_words_from_repo():
     response = get(ENGLISH_WORDS_URL)
 
     if response.status_code != HTTPStatusCode.OK:
