@@ -1,7 +1,9 @@
-import math
+def hash_function(word, bucket_size):
+    ascii_word = list(map(ord, word))
+    half_word_index = len(word) // 2
+    print(word, word[half_word_index])
 
-
-def hash(registro, bucketSize):
+    result = ascii_word[half_word_index]
 
     index = math.trunc(len(registro) / 2)
     half = ord(registro[index])
