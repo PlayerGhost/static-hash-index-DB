@@ -1,6 +1,6 @@
 from requests import get
 from requests.status_codes import codes as HTTPStatusCode
-from Hash import hash
+from Hash import hash_function
 
 ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words.txt'
 
