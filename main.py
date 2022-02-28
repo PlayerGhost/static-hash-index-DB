@@ -24,14 +24,8 @@ def retrieve_words_from_repo():
 
 if __name__ == '__main__':
     database = load_database()
-    database.pop(-1)
-    teste = set()
-    print(database[-1])
-
-    for i in database:
-
-       teste.add(hash(i,len(database)))
+    bucket_size = len(database)
+    teste = {hash_function(i, bucket_size) for i in database}
 
     print('tamanho do set ', len(teste))
     print('tamanho do database ', len(database))
-
