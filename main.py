@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
     print(buckets[aux.index(max(aux))])
 
-    print(buckets)
+    #print(buckets)
 
     # teste = set()
     # print(tabela[-1])
