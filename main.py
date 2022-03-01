@@ -32,9 +32,9 @@ if __name__ == '__main__':
 
     nb = len(tabela) // 5
     buckets = [[None for i in range(0, 5)] for i in range(0, nb)]
-    #print(nb)
-    #print(buckets)
-    #93310
+    # print(nb)
+    # print(buckets)
+    # 93310
 
     for i in range(0, len(paginas)):
         for j in range(0, len(paginas[i])):
@@ -44,14 +44,19 @@ if __name__ == '__main__':
                 hasSlot = False
 
                 for k in range(0, len(buckets[hashIndex])):
+                    if hasSlot:
+                        break
+
                     if type(buckets[hashIndex][k]) == list:
+                        if len(buckets[hashIndex]) == 7:
+                            aux = 0
+
                         for l in range(0, len(buckets[hashIndex][k])):
                             if buckets[hashIndex][k][l] is None:
                                 buckets[hashIndex][k][l] = (paginas[i][j], i)
                                 hasSlot = True
                                 break
 
-                        break
                 if not hasSlot:
                     bucketOverflow = [None for i in range(0, 5)]
                     bucketOverflow[0] = (paginas[i][j], i)
@@ -74,15 +79,15 @@ if __name__ == '__main__':
 
     print(buckets)
 
-    #teste = set()
-    #print(tabela[-1])
+    # teste = set()
+    # print(tabela[-1])
 
-    #for i in tabela:
+    # for i in tabela:
     #    teste.add(hash(i, nb))
 
-    #print(max(teste))
+    # print(max(teste))
 
-    #print(len(tabela) / len(teste))
+    # print(len(tabela) / len(teste))
 
-    #print('tamanho do set ', len(teste))
-    #print('tamanho do database ', len(tabela))
+    # print('tamanho do set ', len(teste))
+    # print('tamanho do database ', len(tabela))
