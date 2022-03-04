@@ -1,12 +1,10 @@
-import math
 
 def hash(registro, bucketSize):
 
-    index = math.trunc(len(registro) / 2)
+    index = len(registro) // 2
     half = ord(registro[index])
-    #print(registro, registro[index])
 
-    for i in range(index + 1, len(registro)):
+    for i in range(index, len(registro)):
         if i % 2 == 0:
             half = (half + ord(registro[i])*2)*i
         else:

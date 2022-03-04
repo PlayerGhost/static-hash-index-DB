@@ -1,6 +1,8 @@
 from requests import get
 from requests.status_codes import codes as HTTPStatusCode
 from Hash import hash
+from Bucket import Bucket
+from Stats import Stats
 
 ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words.txt'
 
@@ -27,11 +29,13 @@ if __name__ == '__main__':
     tabela = load_database()
     tabela.pop(-1)
 
+    # valor do usuario
     pageSize = 10
+
     paginas = makePages(tabela, pageSize)
 
     nb = len(tabela) // 5
-    buckets = [[None for i in range(0, 5)] for i in range(0, nb)]
+    buckets = [Bucket() for i in range(0, nb)]
     # print(nb)
     # print(buckets)
     # 93310
@@ -39,45 +43,9 @@ if __name__ == '__main__':
     for i in range(0, len(paginas)):
         for j in range(0, len(paginas[i])):
             hashIndex = hash(paginas[i][j], nb)
+            buckets[hashIndex].add((paginas[i][j], i))
 
-            if buckets[hashIndex][-1] is not None:
-                hasSlot = False
-
-                for k in range(0, len(buckets[hashIndex])):
-                    if hasSlot:
-                        break
-
-                    if type(buckets[hashIndex][k]) == list:
-                        if len(buckets[hashIndex]) == 7:
-                            aux = 0
-
-                        for l in range(0, len(buckets[hashIndex][k])):
-                            if buckets[hashIndex][k][l] is None:
-                                buckets[hashIndex][k][l] = (paginas[i][j], i)
-                                hasSlot = True
-                                break
-
-                if not hasSlot:
-                    bucketOverflow = [None for i in range(0, 5)]
-                    bucketOverflow[0] = (paginas[i][j], i)
-
-                    buckets[hashIndex].append(bucketOverflow)
-            else:
-                for k in range(0, len(buckets[hashIndex])):
-                    if buckets[hashIndex][k] is None:
-                        buckets[hashIndex][k] = (paginas[i][j], i)
-                        break
-
-    aux = [0 for i in range(0, len(buckets))]
-
-    for i in range(0, len(tabela)):
-        aux[hash(tabela[i], nb)] += 1
-
-    print(max(aux), aux.index(max(aux)))
-
-    print(buckets[aux.index(max(aux))])
-
-    #print(buckets)
+    # print(buckets)
 
     # teste = set()
     # print(tabela[-1])
