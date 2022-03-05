@@ -44,7 +44,7 @@ def searchOnBucket(key, buckets, paginas, nb):
     tupla = buckets[hashIndex].search(key)
 
     if tupla is not None:
-        stats.setCusto(1)
+        stats.addCusto()
         return searchOnPage(tupla, paginas)
     else:
         return "Palavra não encontrada."
@@ -70,9 +70,11 @@ if __name__ == '__main__':
     nb = len(tabela) // 5
     buckets = makeBuckets(paginas, nb)
 
-    key = "a\r"
+    key = "Q."
     print(searchOnBucket(key, buckets, paginas, nb))
 
-    print(stats.overflows)
+    print(f"Overflows: {stats.overflows}")
+    print(f"Custo: {stats.custo}")
+    print(f"Collisions: {stats.collisions}")
 
-    # print(buckets)
+
