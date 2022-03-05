@@ -76,28 +76,3 @@ if __name__ == '__main__':
     print(stats.overflows)
 
     # print(buckets)
-
-    teste = set()
-    print(tabela[-1])
-
-    for i in tabela:
-        teste.add(hash(i, nb))
-
-    aux = [0 for i in range(0, len(buckets))]
-
-    for i in range(0, len(tabela)):
-        aux[hash(tabela[i], nb)] += 1
-
-    print(max(aux), aux.index(max(aux)))
-
-    print(len(tabela) / len(teste))
-
-    print('tamanho do set ', len(teste))
-    print('tamanho do database ', len(tabela))
-
-    aux = 0
-
-    for i in buckets:
-        aux += len(i.registros)
-
-    a = 0
