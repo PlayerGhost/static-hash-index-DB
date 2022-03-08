@@ -5,13 +5,13 @@ from Bucket import Bucket
 from Stats import Stats
 
 ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words.txt'
-#ENGLISH_WORDS_URL = 'https://drive.google.com/u/5/uc?id=1K8b8XP71B--U-OTFx60NDGbOwUH5Hk9x&export=download'
-
-def load_database():
-    return get_words_from_repo().text.split("\n")
 
 
-def get_words_from_repo():
+def loadDatabase():
+    return getWordsFromRepo().text.split("\n")
+
+
+def getWordsFromRepo():
     response = get(ENGLISH_WORDS_URL)
 
     if response.status_code != HTTPStatusCode.OK:
@@ -26,7 +26,7 @@ def makePages(tabela, pageSize):
 
 
 def makeBuckets(paginas, nb):
-    buckets = [Bucket(stats, False) for i in range(0, nb)]
+    buckets = [Bucket(stats, False) for _ in range(nb)]
     # 93310
 
     for i in range(0, len(paginas)):
@@ -39,6 +39,7 @@ def makeBuckets(paginas, nb):
 
     return buckets
 
+
 def searchOnBucket(key, buckets, paginas, nb):
     hashIndex = hash(key, nb)
     tupla = buckets[hashIndex].search(key)
@@ -46,22 +47,20 @@ def searchOnBucket(key, buckets, paginas, nb):
     if tupla is not None:
         stats.addCusto()
         return searchOnPage(tupla, paginas)
-    else:
-        return "Palavra não encontrada."
+
+    return "Palavra não encontrada."
 
 
 def searchOnPage(tupla, paginas):
-
     for i in paginas[tupla[1]]:
         if tupla[0] is i:
             return f"Palavra '{i}' encontrada!"
 
 
 if __name__ == '__main__':
-    tabela = load_database()
+    tabela = loadDatabase()
     tabela.pop(-1)
 
-    global stats
     stats = Stats()
 
     pageSize = 10
@@ -70,11 +69,9 @@ if __name__ == '__main__':
     nb = len(tabela) // 5
     buckets = makeBuckets(paginas, nb)
 
-    key = "Q."
+    key = "."
     print(searchOnBucket(key, buckets, paginas, nb))
 
     print(f"Overflows: {stats.overflows}")
     print(f"Custo: {stats.custo}")
     print(f"Collisions: {stats.collisions}")
-
-
