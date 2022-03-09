@@ -1,6 +1,8 @@
 class Stats:
-
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.collisions = 0
         self.overflows = 0
         self.custo = 0
@@ -13,3 +15,11 @@ class Stats:
 
     def addCusto(self):
         self.custo += 1
+    
+    def get(self):
+        return {
+            'collisions': self.collisions,
+            'overflows': self.overflows,
+            'custo': self.custo
+        }
+    
