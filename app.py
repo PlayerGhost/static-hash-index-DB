@@ -16,10 +16,15 @@ def new_response(content=''):
 
 @app.route("/")
 def main():
-    tamanhoPagina = int(request.args.get('pageSize'))
-    programa.setup(tamanhoPagina)
-
     response = new_response()
+
+    try:
+        tamanhoPagina = int(request.args.get('pageSize'))
+        programa.setup(tamanhoPagina)
+        response.status = 200
+
+    except ValueError:
+        response.status = 500
 
     return response
 
