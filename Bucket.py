@@ -1,18 +1,19 @@
 class Bucket:
 
-    def __init__(self, stats, isOverflow):
+    def __init__(self, stats, isOverflow, bucketSize):
         self.registros = []
         self.bucket = None
         self.stats = stats
         self.isOverflow = isOverflow
+        self.bucketSize = bucketSize
 
     def add(self, tupla):
-        if len(self.registros) < 5:
+        if len(self.registros) < self.bucketSize:
             self.registros.append(tupla)
         else:
             if self.bucket is None:
                 self.stats.addOverflow()
-                self.bucket = Bucket(self.stats, True)
+                self.bucket = Bucket(self.stats, True, self.bucketSize)
             self.bucket.add(tupla)
 
     def search(self, key):
