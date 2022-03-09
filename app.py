@@ -5,11 +5,14 @@ from main import Programa
 app = Flask(__name__)
 programa = Programa()
 
+
 @app.route("/")
 def main():
-    tamanhoPagina = int(request.args.get('pageSize')) # páginas vazias (??)
+    tamanhoPagina = int(request.args.get('pageSize'))
     programa.setup(tamanhoPagina)
-    return '{} -> {}'.format(programa.numeroBuckets, programa.buckets)
+    print(programa.numeroBuckets)
+    return 'teste'
 
 
-app.run()
+if __name__ == '__main__':
+    app.run()
