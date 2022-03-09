@@ -4,12 +4,14 @@ from Hash import hash
 from Bucket import Bucket
 from Stats import Stats
 
+
 ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words.txt'
 
 
 def loadDatabase():
     content = getWordsFromRepo().text.split("\n")
-    return content.pop()
+    filtered_content = content[:-1]
+    return filtered_content
 
 
 def getWordsFromRepo():
