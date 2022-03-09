@@ -28,13 +28,10 @@ def makePages(tabela, pageSize):
     return [tabela[i:i + pageSize] for i in range(0, len(tabela), pageSize)]
 
 
-
 def searchOnPage(tupla, paginas):
     for i in paginas[tupla[1]]:
         if tupla[0] is i:
             return f"Palavra '{i}' encontrada!"
-
-
 
 
 class Programa:
@@ -54,8 +51,8 @@ class Programa:
         self.buckets = self.makeBuckets()
 
     def makeBuckets(self):
-        buckets = [Bucket(self.stats, False, self.bucketSize) for _ in range(self.numeroBuckets)]
-        # 93310
+        buckets = [Bucket(self.stats, False, self.bucketSize)
+                   for _ in range(self.numeroBuckets)]
 
         for i in range(0, len(self.paginas)):
             for j in range(0, len(self.paginas[i])):
@@ -76,25 +73,3 @@ class Programa:
             return searchOnPage(tupla, self.paginas)
 
         return "Palavra não encontrada."
-
-
-if __name__ == '__main__':
-    pass
-    # tabela = loadDatabase()
-    #
-    #
-    # pageSize = 10
-    # paginas = makePages(tabela, pageSize)
-    #
-    # bucketSize = 10
-    #
-    # nb = len(tabela) // bucketSize
-    # buckets = makeBuckets(paginas, nb, bucketSize)
-    #
-    # key = "Q."
-    # print(searchOnBucket(key, buckets, paginas, nb))
-    #
-    # stats = Stats()
-    # print(f"Overflows: {stats.overflows}")
-    # print(f"Custo: {stats.custo}")
-    # print(f"Collisions: {stats.collisions}")
