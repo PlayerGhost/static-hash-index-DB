@@ -1,10 +1,10 @@
 class Stats:
     def __init__(self):
         self.reset()
-
-    def reset(self):
         self.collisions = 0
         self.overflows = 0
+
+    def reset(self):
         self.custo = 0
 
     def addCollisions(self, collisions):
