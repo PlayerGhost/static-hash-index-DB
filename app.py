@@ -1,5 +1,4 @@
-import json
-from urllib import response
+from json import dumps as dictAsString
 from flask import Flask, request, Response
 from flask_cors import CORS
 
