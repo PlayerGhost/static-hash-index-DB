@@ -17,23 +17,32 @@ def newResponse():
 
 @app.route("/")
 def main():
-    response = new_response()
+    response = newResponse()
 
     try:
-        tamanhoPagina = int(request.args.get('pageSize', None))
+        parametroTamanhoPagina = request.args.get('pageSize', None)
+        if parametroTamanhoPagina is None:
+            undefinedPageSizeErr = "Não foi definido um tamanho de página"
+            raise ValueError(undefinedPageSizeErr)
+
+        tamanhoPagina = int(parametroTamanhoPagina)
         programa.stats.reset()
         programa.setup(tamanhoPagina)
         response.status = 200
-        return "database initialized with page size: "+str(tamanhoPagina)
-    except ValueError:
+
+        successfulDatabaseSetup = f"Banco de dados com tamanho de página: {tamanhoPagina}"
+        return successfulDatabaseSetup
+
+    except ValueError as err:
         response.status = 500
+        response.set_data(inBytes(repr(err)))
 
     return response
 
 
 @app.route("/search")
 def search():
-    response = new_response()
+    response = newResponse()
 
     try:
         palavra = request.args.get('wordToSearch', None)
@@ -43,30 +52,34 @@ def search():
         response.status = 200
 
         result = programa.searchOnBucket(palavra)
-        response.set_data(dumps(result).encode('utf8'))
+        response.set_data(inBytes(dictAsString(result)))
 
-
-    except ValueError:
+    except ValueError as err:
         response.status = 500
-    
+        response.set_data(inBytes(repr(err)))
+
     return response
 
 
 @app.route("/health")
 def health():
-    response = new_response()
+    response = newResponse()
     response.status = 200
     return "ok"
 
 
 @app.route("/stats")
 def stats():
-    response = new_response()
+    response = newResponse()
     response.status = 200
     currentStats = programa.stats.get()
 
-    response.set_data(dumps(currentStats).encode('utf-8'))
+    response.set_data(inBytes(dictAsString(currentStats)))
     return response
+
+
+def inBytes(content):
+    return content.encode('utf8')
 
 
 if __name__ == '__main__':
