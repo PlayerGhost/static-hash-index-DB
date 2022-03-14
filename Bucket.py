@@ -10,28 +10,23 @@ class Bucket:
     def add(self, tupla):
         if len(self.registros) < self.bucketSize:
             self.registros.append(tupla)
-        else:
-            if self.bucket is None:
-                self.stats.addOverflow()
-                self.bucket = Bucket(self.stats, True, self.bucketSize)
-            self.bucket.add(tupla)
+            return
+
+        if self.bucket is None:
+            self.stats.addOverflow()
+            self.bucket = Bucket(self.stats, True, self.bucketSize)
+
+        self.bucket.add(tupla)
 
     def search(self, key):
-        tupla = None
-
         for i in self.registros:
             if i[0] == key:
-                tupla = i
+                return i
 
-                break
+        if self.bucket is not None:
+            return self.bucket.search(key)
 
-        if tupla is not None:
-            return tupla
-        else:
-            if self.bucket is not None:
-                return self.bucket.search(key)
-            elif self.bucket is None:
-                return None
+        return None
 
     def countCollisions(self):
         if self.isOverflow:
