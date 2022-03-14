@@ -31,7 +31,10 @@ def makePages(tabela, pageSize):
 def searchOnPage(tupla, paginas):
     for i in paginas[tupla[1]]:
         if tupla[0] is i:
-            return f"Palavra '{i}' encontrada!"
+            return {
+                'res': f"Palavra {i} encontrada!",
+                'page': tupla[1]
+            }
 
 
 class Programa:

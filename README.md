@@ -1,2 +1,8 @@
 # static-hash-index-DB
-Teste
+
+pip install response
+pip install flask
+pip install flask_cors
+
+export FLASK_APP="app"
+flask run

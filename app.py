@@ -1,11 +1,14 @@
+import json
+from urllib import response
 from flask import Flask, request, Response
 from json import dumps
+from flask_cors import CORS
 
 from main import Programa
 
 app = Flask(__name__)
 programa = Programa()
-
+CORS(app)
 
 def new_response():
     res = Response()
@@ -19,9 +22,10 @@ def main():
 
     try:
         tamanhoPagina = int(request.args.get('pageSize', None))
+        programa.stats.reset()
         programa.setup(tamanhoPagina)
         response.status = 200
-
+        return "database initialized with page size: "+str(tamanhoPagina)
     except ValueError:
         response.status = 500
 
@@ -38,18 +42,29 @@ def search():
 
         response.status = 200
 
-        programa.stats.reset()
         result = programa.searchOnBucket(palavra)
-        content = {
-            'result': result,
-            'stats': programa.stats.get()
-        }
-        response.set_data(dumps(content).encode('utf8'))
+        response.set_data(dumps(result).encode('utf8'))
 
 
     except ValueError:
         response.status = 500
     
+    return response
+
+@app.route("/health")
+def health():
+    response = new_response()
+    response.status = 200
+    return "ok"
+
+
+@app.route("/stats")
+def stats():
+    response = new_response()
+    response.status = 200
+    currentStats = programa.stats.get()
+
+    response.set_data(dumps(currentStats).encode('utf-8'))
     return response
 
 
