@@ -15,11 +15,10 @@ class Stats:
 
     def addCusto(self):
         self.custo += 1
-    
+
     def get(self):
         return {
             'collisions': self.collisions,
             'overflows': self.overflows,
             'custo': self.custo
         }
-    

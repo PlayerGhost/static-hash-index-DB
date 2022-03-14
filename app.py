@@ -1,7 +1,6 @@
 import json
 from urllib import response
 from flask import Flask, request, Response
-from json import dumps
 from flask_cors import CORS
 
 from main import Programa
@@ -10,7 +9,8 @@ app = Flask(__name__)
 programa = Programa()
 CORS(app)
 
-def new_response():
+
+def newResponse():
     res = Response()
     res.headers['Access-Control-Allow-Origin'] = '*'
     return res
@@ -31,6 +31,7 @@ def main():
 
     return response
 
+
 @app.route("/search")
 def search():
     response = new_response()
@@ -50,6 +51,7 @@ def search():
         response.status = 500
     
     return response
+
 
 @app.route("/health")
 def health():

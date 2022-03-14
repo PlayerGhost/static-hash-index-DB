@@ -1,9 +1,9 @@
 from requests import get
 from requests.status_codes import codes as HTTPStatusCode
-from Hash import hash
-from Bucket import Bucket
-from Stats import Stats
 
+from Bucket import Bucket
+from Hash import hash
+from Stats import Stats
 
 ENGLISH_WORDS_URL = 'https://github.com/dwyl/english-words/raw/master/words.txt'
 
