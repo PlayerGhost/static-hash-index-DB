@@ -46,6 +46,9 @@ class Programa:
         self.buckets = None
         self.paginas = None
 
+    def reset(self):
+        self.stats.reset()
+
     def setup(self, pageSize):
         self.paginas = makePages(self.tabela, pageSize)
 
@@ -68,6 +71,8 @@ class Programa:
         return buckets
 
     def searchOnBucket(self, key):
+        self.stats.custo = 0
+
         hashIndex = hash(key, self.numeroBuckets)
         tupla = self.buckets[hashIndex].search(key)
 
@@ -75,4 +80,7 @@ class Programa:
             self.stats.addCusto()
             return searchOnPage(tupla, self.paginas)
 
-        return "Palavra não encontrada."
+        return {
+            'res': "Palavra não encontrada!",
+            'page': -1
+        }
