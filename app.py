@@ -26,7 +26,7 @@ def main():
             raise ValueError(undefinedPageSizeErr)
 
         tamanhoPagina = int(parametroTamanhoPagina)
-        programa.stats.reset()
+        programa.reset()
         programa.setup(tamanhoPagina)
         response.status = 200
 
@@ -75,6 +75,7 @@ def stats():
     currentStats = programa.stats.get()
 
     response.set_data(inBytes(dictAsString(currentStats)))
+
     return response
 
 
