@@ -1,4 +1,4 @@
-def hash(registro, bucketSize):
+def hash(registro, numeroBuckets):
     index = len(registro) // 2
     half = ord(registro[index])
 
@@ -11,4 +11,4 @@ def hash(registro, bucketSize):
         else:
             half = (half - int(ord(registro[i]) / 3)) * i
 
-    return int(abs(half % bucketSize))
+    return int(abs(half % numeroBuckets))
