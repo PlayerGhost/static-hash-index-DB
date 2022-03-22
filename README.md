@@ -3,7 +3,7 @@
 ## Dependências
 ```sh
 # Requisições HTTP
-pip install responses
+pip install requests
 
 # Backend
 pip install flask
